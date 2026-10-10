@@ -1,0 +1,322 @@
+[
+  {
+    "term": "Subject",
+    "translation": "主语",
+    "explanation": "句子讨论的人、物或概念，先找它才能看清是谁做或处于什么状态。"
+  },
+  {
+    "term": "Predicate",
+    "translation": "谓语",
+    "explanation": "说明主语的动作或状态；本笔记图中常标出核心动词及助动词。"
+  },
+  {
+    "term": "Object",
+    "translation": "宾语",
+    "explanation": "动作直接涉及的对象，或介词后面的对象。"
+  },
+  {
+    "term": "Subject complement",
+    "translation": "表语或主语补足语",
+    "explanation": "跟在系动词后，补充说明主语是什么或怎么样。"
+  },
+  {
+    "term": "Object complement",
+    "translation": "宾语补足语",
+    "explanation": "进一步说明宾语的动作或状态；如 make customers downgrade 中的 downgrade...。"
+  },
+  {
+    "term": "Modifier",
+    "translation": "修饰语",
+    "explanation": "为另一个词或结构补充性质、范围等信息。"
+  },
+  {
+    "term": "Premodifier",
+    "translation": "前置修饰语",
+    "explanation": "位于被修饰词前，如 rigid traditional 修饰 frameworks。"
+  },
+  {
+    "term": "Postmodifier",
+    "translation": "后置修饰语或后置定语",
+    "explanation": "位于被修饰词后，翻译时常先找它修饰谁。"
+  },
+  {
+    "term": "Adverbial",
+    "translation": "状语",
+    "explanation": "说明动作或整句的时间、条件、原因、目的、方式等。"
+  },
+  {
+    "term": "Antecedent",
+    "translation": "先行词",
+    "explanation": "通常是关系词所指向的词；有时关系词也指向前面整个情况。"
+  },
+  {
+    "term": "Formal subject",
+    "translation": "形式主语",
+    "explanation": "先占主语的位置，把较长的真正内容放到后面；常见为 it。"
+  },
+  {
+    "term": "Real subject",
+    "translation": "真正主语",
+    "explanation": "句子实际评说的内容；在 it 结构中常是后置的 to do 内容。"
+  },
+  {
+    "term": "Clause",
+    "translation": "分句或从句",
+    "explanation": "通常包含自己的主语和谓语；要看它在整句里承担什么作用。"
+  },
+  {
+    "term": "Main clause",
+    "translation": "主句",
+    "explanation": "复杂句中承载核心陈述的部分。"
+  },
+  {
+    "term": "Relative clause",
+    "translation": "定语从句或关系从句",
+    "explanation": "补充或限定某个对象，例如 brands that ignore...。"
+  },
+  {
+    "term": "Nonrestrictive relative clause",
+    "translation": "非限制性定语从句",
+    "explanation": "用逗号与前文分开，补充信息；which 可指前面的整体情况。"
+  },
+  {
+    "term": "Relative pronoun",
+    "translation": "关系代词",
+    "explanation": "如 who、which、that，连接关系从句并在其中承担句法作用。"
+  },
+  {
+    "term": "Object clause",
+    "translation": "宾语从句",
+    "explanation": "整个从句充当宾语，如 deny that...。"
+  },
+  {
+    "term": "Time clause",
+    "translation": "时间状语从句",
+    "explanation": "说明某动作何时发生，如 When night descends。"
+  },
+  {
+    "term": "Conditional clause",
+    "translation": "条件状语从句",
+    "explanation": "说明结论成立的条件，如 if ignored... 的完整形式。"
+  },
+  {
+    "term": "Concessive clause",
+    "translation": "让步状语从句",
+    "explanation": "即使某情况成立，主句依然成立，如 even when...。"
+  },
+  {
+    "term": "Adverbial clause of reason",
+    "translation": "原因状语从句",
+    "explanation": "用 since、as、because 等说明原因，须结合语境确定。"
+  },
+  {
+    "term": "Infinitive",
+    "translation": "不定式",
+    "explanation": "常见 to＋动词原形，可充当多种成分；有时省略 to。"
+  },
+  {
+    "term": "Infinitive of purpose",
+    "translation": "作目的状语的不定式",
+    "explanation": "表示“为了做什么”，不自动说明目的已经实现。"
+  },
+  {
+    "term": "Gerund",
+    "translation": "动名词",
+    "explanation": "doing 结构承担类似名词的功能，如 object to building。"
+  },
+  {
+    "term": "Present participle",
+    "translation": "现在分词",
+    "explanation": "doing 形式用于进行、主动修饰或其他结构，不能只看词尾判断。"
+  },
+  {
+    "term": "Past participle",
+    "translation": "过去分词",
+    "explanation": "常见于被动、完成或修饰结构，如 risks brought by...。"
+  },
+  {
+    "term": "Nonfinite verb",
+    "translation": "非谓语动词",
+    "explanation": "未独立承担句子限定谓语功能的动词形式，包括 to do、doing、done 等。"
+  },
+  {
+    "term": "Prepositional phrase",
+    "translation": "介词短语",
+    "explanation": "由介词及其补足内容构成，如 within frameworks、of the institute。"
+  },
+  {
+    "term": "Modal verb",
+    "translation": "情态动词",
+    "explanation": "如 can、may、must、should，表达能力、可能性、必要性等。"
+  },
+  {
+    "term": "Auxiliary verb",
+    "translation": "助动词",
+    "explanation": "如 do、have、be，协助表达时态、语态、否定或疑问。"
+  },
+  {
+    "term": "Linking verb",
+    "translation": "系动词",
+    "explanation": "连接主语与表语，如 is、seems，重点在描述状态或性质。"
+  },
+  {
+    "term": "Transitive verb",
+    "translation": "及物动词",
+    "explanation": "能直接接宾语；如 oppose a proposal，不随意添加介词。"
+  },
+  {
+    "term": "Intransitive verb",
+    "translation": "不及物动词",
+    "explanation": "该用法下不直接接宾语；如 demand declines。"
+  },
+  {
+    "term": "Noun",
+    "translation": "名词",
+    "explanation": "给人、物、概念等命名，如 evidence、refusal。"
+  },
+  {
+    "term": "Verb",
+    "translation": "动词",
+    "explanation": "表达动作或状态；同一单词可兼具别的词性，须看句中位置。"
+  },
+  {
+    "term": "Adjective",
+    "translation": "形容词",
+    "explanation": "说明性质或状态，如 definite、negligible。"
+  },
+  {
+    "term": "Adverb",
+    "translation": "副词",
+    "explanation": "可修饰动作、程度或整句，如 sharply、gradually。"
+  },
+  {
+    "term": "Preposition",
+    "translation": "介词",
+    "explanation": "连接后面的名词性内容，如 from、with 以及 object to 中的 to。"
+  },
+  {
+    "term": "Conjunction",
+    "translation": "连词",
+    "explanation": "连接词、短语或分句，如 and、because。"
+  },
+  {
+    "term": "Determiner",
+    "translation": "限定词",
+    "explanation": "放在名词前限定其范围，如 a、the、this、our。"
+  },
+  {
+    "term": "Article",
+    "translation": "冠词",
+    "explanation": "a、an、the；注意单数可数名词在语境中是否需要。"
+  },
+  {
+    "term": "Possessive",
+    "translation": "所有格",
+    "explanation": "表达所属等关系，如 scholars’、one’s。"
+  },
+  {
+    "term": "Countable noun",
+    "translation": "可数名词",
+    "explanation": "通常可区分一个和多个，如 scholar、descendant。"
+  },
+  {
+    "term": "Uncountable noun",
+    "translation": "不可数名词",
+    "explanation": "通常不按个体直接计数，如 evidence、information、prey。"
+  },
+  {
+    "term": "Singular and plural",
+    "translation": "单数与复数",
+    "explanation": "表达一个或多个；offspring、species 等存在单复数同形。"
+  },
+  {
+    "term": "Passive voice",
+    "translation": "被动语态",
+    "explanation": "通常用 be＋过去分词，主语承受动作；须辨认施动来源。"
+  },
+  {
+    "term": "Simple present",
+    "translation": "一般现在时",
+    "explanation": "可叙述规律、现状或通常行为，不等于“正在”。"
+  },
+  {
+    "term": "Simple past",
+    "translation": "一般过去时",
+    "explanation": "叙述过去的动作或状态。"
+  },
+  {
+    "term": "Present perfect",
+    "translation": "现在完成时",
+    "explanation": "have／has＋过去分词，常把已发生的事与当前联系起来。"
+  },
+  {
+    "term": "Future tense",
+    "translation": "将来时",
+    "explanation": "表达将来情况，本练习常使用 will＋动词原形。"
+  },
+  {
+    "term": "Subject verb agreement",
+    "translation": "主谓一致",
+    "explanation": "谓语形式须与主语中心词等相协调，不只盯最近的名词。"
+  },
+  {
+    "term": "Partial inversion",
+    "translation": "部分倒装",
+    "explanation": "把助动词或情态动词等提到主语前，实义动词通常仍在其后。"
+  },
+  {
+    "term": "Coordination",
+    "translation": "并列结构",
+    "explanation": "把语法地位相同的词、短语等连接起来，共用成分时别漏译。"
+  },
+  {
+    "term": "Ellipsis",
+    "translation": "省略",
+    "explanation": "可由语境补回重复成分；如 if ignored、when facing。"
+  },
+  {
+    "term": "Double negation",
+    "translation": "双重否定",
+    "explanation": "两个否定成分共同形成肯定或接近肯定的效果，仍须看语境。"
+  },
+  {
+    "term": "SVO",
+    "translation": "主语 谓语 宾语结构",
+    "explanation": "常见骨架：谁／什么 → 做什么 → 对谁／什么。"
+  },
+  {
+    "term": "SVC",
+    "translation": "主语 系动词 表语结构",
+    "explanation": "常见骨架：谁／什么 → 是或怎么样 → 性质或身份。"
+  },
+  {
+    "term": "Sentence core",
+    "translation": "句子主干",
+    "explanation": "先暂时拿开较长的修饰成分，保留句子最核心的结构与意思。"
+  },
+  {
+    "term": "Head word",
+    "translation": "中心词",
+    "explanation": "短语中决定基本性质的词；如 The definition of happiness 的中心是 definition。"
+  },
+  {
+    "term": "Part of speech",
+    "translation": "词性",
+    "explanation": "词在句中的语法类别，如 noun、verb、adjective。相同拼写可有不同词性。"
+  },
+  {
+    "term": "Phrase",
+    "translation": "短语",
+    "explanation": "一组共同承担句法作用的词；如 infinitive phrase 不定式短语，noun phrase 名词短语。"
+  },
+  {
+    "term": "Complement",
+    "translation": "补足语",
+    "explanation": "补充完成结构或意义的成分；具体要看是补充主语、宾语还是其他成分。"
+  },
+  {
+    "term": "Existential construction",
+    "translation": "存在句",
+    "explanation": "以 there be 或 there exists 等表达存在；there 通常不表示具体地点。"
+  }
+]

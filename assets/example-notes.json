@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "title": "英语学霸笔记示例",
+    "chapter": "示例章节",
+    "source_name": "三句格式演示",
+    "source_pages": 1
+  },
+  "entries": [
+    {
+      "id": 1,
+      "translation": "把青年学者的学术探索限制在僵化的传统框架内，是不合理的。",
+      "structure": [
+        "sentence core 是 It is irrational，属于 It＋be＋ adjective ＋to do 结构。It 是 formal subject ， real subject 是后面的 infinitive phrase  to limit…；可还原为 To limit…is irrational。",
+        "infinitive 内部的核心是 limit academic exploration，young scholars’ 是 possessive  modifier ；within rigid traditional frameworks 说明探索被限制的范围。",
+        "rigid 和 traditional 共同修饰 frameworks；否定评价针对整个‘限制学术探索’的行为，而不是针对青年学者本人。"
+      ],
+      "vocabulary": [
+        "irrational， adjective ，不合理的、不理性的；由 negative prefix  ir- 与 rational 构成，本句强调做法缺乏合理性。",
+        "limit， transitive verb ，限制；limit A to B 常表示把 A 限制在 B 范围内，本句用 within 突出框架内部的边界。",
+        "academic exploration，学术探索；academic 修饰与学术研究相关的活动，不能按 academy 机械译成‘学院的’。",
+        "rigid， adjective ，僵化的、死板的；framework， noun ，框架，此处均为抽象义，并非物体坚硬的结构。"
+      ],
+      "exam_points": [
+        "翻译 formal subject 结构时，通常先译 infinitive 内容，再补‘是……的’，不必把 It 译成‘它’。",
+        "抓住 limit 的动作对象及 within 引出的范围，形成‘把……限制在……内’的完整中文表达。"
+      ],
+      "pitfalls": [
+        "不要把 scholars 译成‘奖学金’，也不要把 irrational 理解成数学中的‘无理数’；语境决定其评价义。"
+      ],
+      "source_note": "",
+      "diagram": [
+        {
+          "role": "Formal subject",
+          "text": "It"
+        },
+        {
+          "role": "Evaluation",
+          "text": "is irrational"
+        },
+        {
+          "role": "Real subject",
+          "text": "to limit young scholars’ academic exploration"
+        },
+        {
+          "role": "Scope",
+          "text": "within rigid traditional frameworks"
+        }
+      ],
+      "memory_tip": "It 像先占座的标签，真正被评价的内容在后面的 to do。",
+      "page": 1,
+      "raw": "It is irrational to limit young scholars’ academic exploration within rigid traditional frameworks.",
+      "english": "It is irrational to limit young scholars’ academic exploration within rigid traditional frameworks.",
+      "keyword": "irrational"
+    },
+    {
+      "id": 2,
+      "translation": "只有齐心协力，我们才能按期完成这项艰巨的研究项目。",
+      "structure": [
+        "正常语序为 We can finish this arduous research project on schedule only with concerted efforts；原句将 only 修饰的 prepositional phrase 移到句首，触发 main clause  partial inversion 。",
+        "inversion 形式是 can we finish：只把 modal verb  can 放到 subject  we 前， main verb  finish 留在 subject 后，不是把整个 predicate 全部前移。",
+        "with concerted efforts 表示实现目标所需的方式或条件，on schedule 表示按计划的时间；arduous 修饰 research project。"
+      ],
+      "vocabulary": [
+        "concerted， adjective ，共同努力的、协调一致的；concerted efforts 通常译为共同努力、齐心协力，强调配合。",
+        "arduous， adjective ，艰巨的、艰苦的；强调任务需要持续付出努力，不仅是情绪上令人不悦。",
+        "on schedule，按期、按计划；ahead of schedule 是提前，behind schedule 是落后于进度。",
+        "finish， transitive verb ，完成；后面接 noun 或 doing，表达‘完成做某事’一般不用 finish to do。"
+      ],
+      "exam_points": [
+        "Only＋ adverbial 置于句首时， main clause 用 partial inversion ；Only＋ subject 置于句首通常不 inversion ，不能机械套用。",
+        "译文用‘只有……才……’保留必要条件关系；不要改成‘只要努力就一定完成’这种充分条件表达。"
+      ],
+      "pitfalls": [
+        "can we finish 虽与 interrogative sentence 词序相似，本句仍是 declarative sentence ；不能译成‘我们能完成吗’。"
+      ],
+      "source_note": "",
+      "diagram": [
+        {
+          "role": "Fronted adverbial",
+          "text": "Only with concerted efforts"
+        },
+        {
+          "role": "Partial inversion",
+          "text": "can we finish"
+        },
+        {
+          "role": "Object",
+          "text": "this arduous research project"
+        },
+        {
+          "role": "Time",
+          "text": "on schedule"
+        }
+      ],
+      "memory_tip": "Only＋ adverbial 站到句首，can 跑到 subject 前； main verb  finish 留在后面。",
+      "page": 1,
+      "raw": "Only with concerted（adj. 共同筹划的，一致的；尽力的）efforts can we finish this arduous（adj. 艰辛的，困难的）research project on schedule.",
+      "english": "Only with concerted efforts can we finish this arduous research project on schedule.",
+      "keyword": "concerted"
+    },
+    {
+      "id": 3,
+      "translation": "社会动荡发生之前，往往先出现贫富差距扩大和生活压力上升的情况。",
+      "structure": [
+        "sentence core 为 Social unrest is often preceded by…，is preceded 是 passive voice 。precede 表示“先于……”，因此 by 后面的现象发生在社会动荡之前。",
+        "widening wealth gaps 与 rising living pressure 由 and 并列，构成 preposition  by 的 object ；widening 和 rising 都是 premodifier ，表示扩大中、上升中。"
+      ],
+      "vocabulary": [
+        "precede： transitive verb ，先于；A precedes B 表示 A 在 B 前，B is preceded by A 的时间顺序仍是 A 在前。",
+        "social unrest：社会动荡、社会不安；unrest 通常为 uncountable noun ，不宜理解成普通个人心情烦躁。",
+        "wealth gap：财富差距、贫富差距；widening 表示差距扩大，rising pressure 表示压力增加。"
+      ],
+      "exam_points": [
+        "passive sentence 翻译须还原先后：先是差距扩大、压力增加，之后才是社会动荡，不能按中文直觉将顺序翻转。",
+        "often 只说明常见先后关系；本句没有明确证明这些现象必然导致动荡，不能补成唯一原因或必然结果。"
+      ],
+      "pitfalls": [
+        "不要译为“社会动荡往往先于贫富差距扩大”，那正好与 is preceded by 的含义相反。"
+      ],
+      "source_note": "",
+      "diagram": [
+        {
+          "role": "Subject",
+          "text": "Social unrest"
+        },
+        {
+          "role": "Passive predicate",
+          "text": "is often preceded by"
+        },
+        {
+          "role": "Object of by",
+          "text": "widening wealth gaps and rising living pressure"
+        }
+      ],
+      "memory_tip": "先贫富差距扩大和压力增加，再有社会动荡； passive sentence 的文字顺序不等于事件顺序。",
+      "page": 1,
+      "raw": "Social unrest （n. 动荡，动乱） is often preceded by widening wealth gaps and rising living pressure.",
+      "english": "Social unrest is often preceded by widening wealth gaps and rising living pressure.",
+      "keyword": "precede"
+    }
+  ],
+  "groups": [
+    {
+      "title": "结构与逻辑",
+      "range": [
+        1,
+        3
+      ],
+      "subtitle": "先识别结构  再还原含义",
+      "icon": "reading",
+      "nodes": [
+        [
+          "抓核心",
+          "Subject / Predicate",
+          "谁做什么"
+        ],
+        [
+          "看关系",
+          "Condition / Time",
+          "条件与先后"
+        ],
+        [
+          "再翻译",
+          "Meaning",
+          "保持原意"
+        ]
+      ],
+      "rows": [
+        [
+          "It is...to do",
+          "形式占位与真实内容",
+          "先看完整的 to do"
+        ],
+        [
+          "Only + adverbial",
+          "部分倒装",
+          "辅助词前置，实义动词保留"
+        ],
+        [
+          "be preceded by",
+          "先后次序",
+          "后面的事件实际先发生"
+        ]
+      ],
+      "focus": "Only＋adverbial 位于句首，可能触发 partial inversion。",
+      "warning": "箭头说明结构或逻辑，不能把先后顺序直接当作因果。"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Subject",
+      "translation": "主语",
+      "explanation": "句子讨论的人、物或概念，先找它才能看清是谁做或处于什么状态。",
+      "examples": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "term": "Predicate",
+      "translation": "谓语",
+      "explanation": "说明主语的动作或状态；本笔记图中常标出核心动词及助动词。",
+      "examples": [
+        2,
+        3
+      ]
+    },
+    {
+      "term": "Formal subject",
+      "translation": "形式主语",
+      "explanation": "先占主语的位置，把较长的真正内容放到后面；常见为 it。",
+      "examples": [
+        1
+      ]
+    },
+    {
+      "term": "Partial inversion",
+      "translation": "部分倒装",
+      "explanation": "把助动词或情态动词等提到主语前，实义动词通常仍在其后。",
+      "examples": [
+        2
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "英语彩色学霸笔记"
+  short_description: "英语句子全译详解，彩色箭头与趣味图解，输出PDF和离线互动笔记"
+  default_prompt: "使用 $english-study-notes 将附件全部句子做成同款彩色学霸笔记，附详细考点、English语法术语及中英对照表，输出PDF和离线互动版。"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,4 @@
+# Python 3.10+; native Poppler and Node/Playwright are optional QA tools.
+reportlab>=4.0,<5
+pypdf>=4,<7
+Pillow>=10,<13

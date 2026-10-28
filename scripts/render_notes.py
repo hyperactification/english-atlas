@@ -9,6 +9,7 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.enums import TA_LEFT,TA_CENTER
 from grammar_terms import english_terms
 from lexical_resources import format_vocabulary
+from runtime_support import register_pdf_fonts
 
 ROOT=Path(__file__).resolve().parent
 parser=argparse.ArgumentParser(description="Render reviewed English sentence notes as a color PDF and an offline interactive HTML file.")
@@ -18,28 +19,19 @@ parser.add_argument('--qa-dir',type=Path)
 parser.add_argument('--basename')
 parser.add_argument('--font-cn',type=Path)
 parser.add_argument('--font-cn-bold',type=Path)
+parser.add_argument('--font-en',type=Path)
+parser.add_argument('--font-en-bold',type=Path)
 args=parser.parse_args()
 book=json.loads(args.input.read_text(encoding='utf-8-sig'))
 meta=book['meta'];entries=copy.deepcopy(book['entries']);groups=copy.deepcopy(book['groups'])
-TOTAL=len(entries);CHAPTER=meta.get('chapter','English Study Notes');TITLE=meta['title']
+TOTAL=len(entries);CHAPTER=meta.get('chapter','English Atlas');TITLE=meta['title']
 GLOSSARY=[(g['term'],g['translation'],g['explanation'],'  '.join(str(i) for i in g['examples'])) for g in book['glossary']]
 OUT=args.output_dir.resolve();OUT.mkdir(parents=True,exist_ok=True)
 QA=(args.qa_dir or args.input.resolve().parent/'qa').resolve();QA.mkdir(parents=True,exist_ok=True)
 BASENAME=re.sub(r'[<>:"/\\|?*]','_',args.basename or TITLE).strip(' .')
 if not BASENAME:raise ValueError('A non-empty output basename is required')
-fontroot=Path(os.environ.get('WINDIR','C:/Windows'))/'Fonts'
-cn=args.font_cn or fontroot/'msyh.ttc';cnb=args.font_cn_bold or fontroot/'msyhbd.ttc'
-if not cn.is_file():raise SystemExit('CJK TrueType font missing; pass --font-cn and --font-cn-bold. On Windows use Microsoft YaHei.')
-if not cnb.is_file():cnb=cn
-pdfmetrics.registerFont(TTFont('CN',str(cn),subfontIndex=0))
-pdfmetrics.registerFont(TTFont('CNB',str(cnb),subfontIndex=0))
-pdfmetrics.registerFontFamily('CN',normal='CN',bold='CNB',italic='CN',boldItalic='CNB')
-en=fontroot/'arial.ttf';enb=fontroot/'arialbd.ttf'
-if not en.is_file():en=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf');enb=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
-if not en.is_file():en=cn;enb=cnb
-pdfmetrics.registerFont(TTFont('EN',str(en),subfontIndex=0))
-pdfmetrics.registerFont(TTFont('ENB',str(enb),subfontIndex=0))
-pdfmetrics.registerFontFamily('EN',normal='EN',bold='ENB',italic='EN',boldItalic='ENB')
+FONT_SELECTION=register_pdf_fonts(args,book)
+(QA/'fonts.json').write_text(json.dumps(FONT_SELECTION,ensure_ascii=False,indent=2),encoding='utf-8')
 SOURCE_LINE=f"来源：{meta.get('source_author','')}《{meta['source_name']}》，原文{meta['source_pages']}页。"
 INK='#17263C';MUTED='#64748B';BLUE='#2457BD';RED='#B84132';PURPLE='#7446A7';TEAL='#167361';AMBER='#945B09';PAPER='#FCFCF9';BORDER='#DDE4EA'
 W,H=595.276,841.89;M=40;CW=W-2*M

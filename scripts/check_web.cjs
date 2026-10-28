@@ -1,15 +1,28 @@
 /* Browser behavior check for the generated, fully offline notebook. */
-const fs=require('fs'),path=require('path'),os=require('os');
+const fs=require('fs'),path=require('path');
 function arg(key){let i=process.argv.indexOf(key);return i>=0?process.argv[i+1]:null}
 function playwright(){
-  const roots=[process.env.NODE_PATH,path.join(path.dirname(process.execPath),'../node_modules'),path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules')].filter(Boolean);
+  // Prefer normal local resolution, then standard NODE_PATH entries and
+  // dependencies adjacent to the selected Node executable.
+  try{return require('playwright')}catch{}
+  const roots=[...(process.env.NODE_PATH||'').split(path.delimiter),path.resolve('node_modules'),path.resolve(path.dirname(process.execPath),'../node_modules')].filter(Boolean);
   for(const r of roots){try{return require(path.join(r,'playwright'))}catch{}}
-  return require('playwright');
+  throw Error('Playwright is unavailable. Run npm install --no-save playwright from the skill root, or set NODE_PATH.');
 }
+let activeBrowser;
 (async()=>{
   const file=arg('--html'),qa=arg('--qa-dir');if(!file||!qa)throw Error('Usage: node check_web.cjs --html FILE --qa-dir DIR');
   fs.mkdirSync(qa,{recursive:true});const {chromium}=playwright();let browser;
-  try{browser=await chromium.launch({channel:'msedge',headless:true})}catch{browser=await chromium.launch({headless:true})}
+  const executable=arg('--browser-executable')||process.env.ENGLISH_ATLAS_BROWSER_EXECUTABLE;
+  const channel=arg('--browser-channel')||process.env.ENGLISH_ATLAS_BROWSER_CHANNEL;
+  if(executable&&channel)throw Error('Choose --browser-executable or --browser-channel, not both.');
+  if(executable||channel){browser=await chromium.launch({headless:true,...(executable?{executablePath:executable}:{channel})})}
+  else{
+    try{browser=await chromium.launch({headless:true})}
+    catch(first){for(const fallback of ['chrome','msedge']){try{browser=await chromium.launch({channel:fallback,headless:true});break}catch{}}
+      if(!browser)throw Error('No usable browser. Run npx playwright install chromium, or set --browser-channel / --browser-executable. '+first.message)}
+  }
+  activeBrowser=browser;
   const page=await browser.newPage({viewport:{width:1365,height:1000}}),errors=[],externalRequests=[];
   await page.route(/^https?:/,route=>{externalRequests.push(route.request().url());return route.abort()});
   page.on('pageerror',e=>errors.push(e.message));
@@ -51,4 +64,4 @@ function playwright(){
   if(externalRequests.length)throw Error('Offline notebook attempted network requests: '+externalRequests.join(', '));
   const result={pass:!errors.length,notes:count,glossary:await page.locator('.glossary tbody tr').count(),numericSearch:true,textSearch:true,noResultState:true,selfTest:true,singleReveal:true,reset:true,glossaryNavigation:true,internalLinks:true,printRestoresContent:true,offline:true,mobileOverflow:overflow,mobileDiagramWordsIntact:true,errors};
   fs.writeFileSync(path.join(qa,'web-verification.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));await browser.close();if(errors.length)process.exitCode=1;
-})().catch(e=>{console.error(e);process.exitCode=1});
+})().catch(async e=>{console.error(e);if(activeBrowser)await activeBrowser.close().catch(()=>{});process.exitCode=1});

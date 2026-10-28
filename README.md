@@ -1,82 +1,81 @@
 # English Atlas｜英語精讀圖譜
 
-将编号式英语句子练习 PDF、图片或文档制作成完整精读笔记，默认输出可打印 PDF 和可搜索、自测、跳转的单文件离线 HTML。
+An agent-independent skill for turning English sentence exercises into detailed bilingual study atlases: printable, searchable PDF and a self-contained offline HTML edition.
 
-新版让阅读顺序更明确：原句、译文与拆句图先行；结构分析与记忆提示位于左侧，考试提示和易错点位于右侧；每个词条独立成卡，蓝色近义表达与右侧替换限制逐项配对。内容长度决定分页，完整译文、详细解析和近义辨析都会保留。
+将编号式英语句子练习 PDF、图片或文档制作成完整精读图谱。保留原句、自然译文与详细解析，以拆句图、独立词卡、逐项近义辨析和考点面板帮助学习。正文 Grammar 术语使用 English，并集中提供中英术语表及真实例句跳转。
 
-![English Atlas 精读笔记预览](assets/reference-note.png)
+![English Atlas 精读图谱结构预览](assets/reference-note.png)
 
-正文 Grammar 术语使用 English，集中提供中英对照与真实例号。适用于考研核心词句及类似整份材料，不用于只翻译一句话或通用文件转换。
+正式 Skill ID、安装文件夹和调用名称统一为 **`english-atlas`**。核心指令位于 [SKILL.md](SKILL.md)，遵循可移植的 Agent Skills 目录形式；Python 工具可在宿主之外独立运行。
 
-## 在 Codex 中安装
+## 安装到不同 Agent
 
-仓库地址：[hyperactification/english-atlas](https://github.com/hyperactification/english-atlas)。显示名称为 **English Atlas｜英語精讀圖譜**；为兼容既有调用，安装后的技能目录名及 `SKILL.md` 中的 `name` 仍为 **english-study-notes**，调用仍用 `$english-study-notes`。
+[下载完整 ZIP](https://github.com/hyperactification/english-atlas/archive/refs/heads/main.zip) 或克隆仓库：
 
-可在 Codex 中调用内置安装器，并明确安装名称：
-
-```text
-$skill-installer 从 https://github.com/hyperactification/english-atlas 的仓库根目录安装此技能，安装目录名保持 english-study-notes。
+```sh
+git clone https://github.com/hyperactification/english-atlas.git english-atlas
 ```
 
-也可[下载 ZIP](https://github.com/hyperactification/english-atlas/archive/refs/heads/main.zip)，将包含 `SKILL.md`、`scripts`、`references`、`assets`、`agents` 的完整目录放入实际的 Codex skills 目录，并命名为 `english-study-notes`。
+保留完整目录，确保 `english-atlas/SKILL.md` 与 `scripts/`、`references/`、`assets/` 位于同一级。
 
-本项目当前验证的 Windows Codex 安装位置是 `%USERPROFILE%\.codex\skills\english-study-notes`；其他环境以实际加载的 Skill 目录为准。已有安装不因仓库更名而改技能 ID。
+| 使用环境 | 安装或加载方式 | 调用方式 |
+| --- | --- | --- |
+| Claude Code | 放入个人 `~/.claude/skills/english-atlas/`，或项目 `.claude/skills/english-atlas/`。 | `/english-atlas` 或自然语言。 |
+| Codex | 放入当前客户端配置的 skills 目录，子目录名为 `english-atlas`；本项目现有安装位置为 `~/.codex/skills/english-atlas/`，设置了 `CODEX_HOME` 时使用其 `skills/` 子目录。 | `$english-atlas` 或自然语言。 |
+| 其他支持 Agent Skills 的 Agent／IDE | 使用其导入功能，或放入该宿主实际支持的 skills 目录。 | 按宿主的技能选择或命令规则调用。 |
+| 可读文件并执行工具的通用 Agent | 告知完整目录位置，要求先读取 `SKILL.md`，再按相对路径读取参考资料并运行工具。 | 自然语言即可。 |
 
-需要本地克隆时，可显式保留目录名：
+`agents/openai.yaml` 仅是可选的客户端显示配置；其他宿主可以忽略。核心流程不依赖专有连接器、宿主缓存路径或特定命令前缀。只有文档读取能力的环境可用于分析与撰写，PDF／HTML 文件生成和验收需要可执行脚本或等效文档工具的环境。
 
-```powershell
-git clone https://github.com/hyperactification/english-atlas.git english-study-notes
-```
-
-其他支持 Agent Skills 的客户端可按各自支持的方式导入完整目录；其路径、脚本权限、字体和依赖需自行核验，本仓库不承诺未经验证的全面兼容。
+以上路径是安装示例，实际发现规则和工具权限以宿主版本为准。本项目已在 Windows 上运行验证；macOS／Linux 提供通用 Python 入口与字体发现逻辑，尚未在原生系统上完成实测。
 
 ## 使用
 
 ```text
-$english-study-notes 把附件中的全部句子制作成 English Atlas，完整翻译和详细讲解，突出词条、近义辨析及考点，输出 PDF 和离线互动版。
+使用 English Atlas，把附件全部句子制作成精读图谱，完整翻译和详细讲解，突出词条、近义辨析及考点，输出 PDF 和离线互动版。
 ```
 
-每题保留原题号、来源页码和完整英文，提供自然译文、Sentence structure、Vocabulary、Exam focus、Pitfalls、拆句图与记忆提示；原文用法问题独立列为 Source note。近义表达以本句义项为准，并说明语气、程度、词性或结构差别；没有合适表达时说明原因。
+每题保留原题号、来源页码和完整英文，提供自然译文、Sentence structure、Vocabulary、Exam focus、Pitfalls、拆句图和记忆提示；原文问题独立列为 Source note。Near synonyms 贴合本句义项，并说明语气、程度、词性或结构差别与替换限制；没有合适表达时说明原因。
 
-PDF 的长题可续页，页眉保留题号和关键词，长词卡重复词条头。HTML 支持全文／题号搜索、译文遮罩、单句揭晓、重置、章节导航及 Grammar Glossary 例句跳转，可直接离线打开。
+排版按内容调整：原句、译文和拆句图先行；结构、考试提示与词汇分区呈现。共同检查首页与续页的密度，优先在完整面板和词卡之间重新分配内容。长词卡续页保留词条头，每题续页保留题号和关键词。HTML 支持全文／题号搜索、译文自测、单句揭晓、重置、章节导航与 Grammar Glossary 例句跳转，可直接离线打开。
 
-## 当前 Windows 运行入口
+## 独立运行
 
-`<skill-dir>` 替换为实际安装目录，例如当前环境的 `%USERPROFILE%\.codex\skills\english-study-notes`。运行器优先发现当前用户的 Codex bundled Python，再查 PATH：
+需要 Python 3.10+。在 Skill 根目录安装 Python 依赖并检查环境：
 
-```powershell
-& '<skill-dir>\scripts\run.ps1' doctor
-& '<skill-dir>\scripts\run.ps1' extract --input '<source.pdf>' --output-dir '<work\run>'
+```sh
+python -m pip install -r requirements.txt
+python scripts/run.py doctor
 ```
 
-核对原文并撰写本次 `notes.json` 后，依次运行：
+按环境使用 `python3` 或解释器的实际路径。提取源材料、人工／Agent 撰写完整的 `notes.json` 后，依次校验、渲染并检查：
 
-```powershell
-& '<skill-dir>\scripts\run.ps1' validate --input '<work\run\notes.json>' --source '<work\run\sentences.json>'
-& '<skill-dir>\scripts\run.ps1' render --input '<work\run\notes.json>' --output-dir '<outputs>' --qa-dir '<work\run\qa>'
-& '<skill-dir>\scripts\run.ps1' verify --qa-dir '<work\run\qa>' --render
-node '<skill-dir>\scripts\check_web.cjs' --html '<实际生成的.html>' --qa-dir '<work\run\qa>'
+```sh
+python scripts/run.py extract --input source.pdf --output-dir work/run
+python scripts/run.py validate --input work/run/notes.json --source work/run/sentences.json
+python scripts/run.py render --input work/run/notes.json --output-dir outputs --qa-dir work/run/qa
+python scripts/run.py verify --qa-dir work/run/qa --render
 ```
 
-Python 依赖为 `reportlab`、`pypdf`、`Pillow`；PDF 视觉检查需要 Poppler，网页检查需要 Node、Playwright 和可用浏览器。`doctor` 只检查 Python 包，不能替代字体、全部页面和实际交互验收。详细入口、依赖与排错见 [runtime.md](references/runtime.md)。
+提取器不自动翻译或撰写解析。PDF 视觉检查需要 Poppler；自动浏览器检查需要 Node、Playwright 和可用浏览器。字体支持显式指定及系统发现，不要求某一宿主或 Windows 字体。完整依赖、参数和排错见 [runtime.md](references/runtime.md)。
 
-## 目录与脚本
+## 目录与数据
 
 ```text
-english-study-notes/
+english-atlas/
 ├── SKILL.md
-├── agents/openai.yaml
-├── assets/
-│   ├── example-notes.json
-│   ├── grammar_glossary.json
-│   └── reference-*.png
+├── README.md
+├── requirements.txt
+├── agents/openai.yaml          # 可选客户端显示配置
+├── assets/                     # 小型示例与版式参考图
 ├── references/
 │   ├── content-guide.md
 │   ├── design-guide.md
 │   ├── schema.md
 │   └── runtime.md
 └── scripts/
-    ├── run.ps1
+    ├── run.py                  # 通用 Python 入口
+    ├── run.ps1                 # 可选 PowerShell 入口
     ├── extract_sentences.py
     ├── validate_content.py
     ├── render_notes.py
@@ -87,8 +86,6 @@ english-study-notes/
     └── check_web.cjs
 ```
 
-`atlas_layout.py` 实现新版 PDF／HTML 的阅读层级、分区面板和词卡；`lexical_resources.py` 保留词条、语境义、近义项与辨析的文本表示。内容结构见 [schema.md](references/schema.md)，教学边界见 [content-guide.md](references/content-guide.md)，视觉与续页验收见 [design-guide.md](references/design-guide.md)。
+内容结构见 [schema.md](references/schema.md)，教学边界见 [content-guide.md](references/content-guide.md)，视觉与续页验收见 [design-guide.md](references/design-guide.md)。示例 JSON 和参考图用于展示结构与版式，不代表完整教材章节。
 
-## 材料与示例
-
-仓库提供技能指令、辅助脚本、小型演示 JSON 与参考图；示例用于展示数据格式和版式，不代表某一完整教材章节。本仓库不附用户完整源 PDF 或第三方完整学习材料，使用者自行提供有权使用的原始内容。提取、JSON 和 QA 留在本次工作目录，最终交付 PDF 与离线 HTML。
+仓库不附用户完整源 PDF 或第三方完整学习材料。使用者提供有权使用的材料；本次提取、内容 JSON 和 QA 留在独立工作目录，最终交付 PDF 与离线 HTML。

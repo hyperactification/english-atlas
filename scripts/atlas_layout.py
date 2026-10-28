@@ -1,6 +1,6 @@
-"""English Atlas v2: explicit reading hierarchy and structured lexical cards."""
+"""English Atlas: readable panels, complete lexical cards and balanced pagination."""
 from pathlib import Path
-import copy,html,json,re
+import copy,html,json,re,io,math
 from reportlab.platypus import (BaseDocTemplate,PageTemplate,Frame,Flowable,
     Paragraph,Spacer,PageBreak,Table,TableStyle,KeepTogether)
 from reportlab.lib.styles import ParagraphStyle
@@ -26,42 +26,84 @@ def pad(table,n=10):
     table.setStyle(TableStyle([('LEFTPADDING',(0,0),(-1,-1),n),('RIGHTPADDING',(0,0),(-1,-1),n),
         ('TOPPADDING',(0,0),(-1,-1),n),('BOTTOMPADDING',(0,0),(-1,-1),n),('VALIGN',(0,0),(-1,-1),'TOP')]))
     return table
-def box(title,items,width=CW,accent=BLUE,bg=PALE,numbered=False):
+def box(title,items,width=CW,accent=BLUE,bg=PALE,numbered=False,size=10,padding=7):
     rows=[[para(title,9.5,'CNB',accent)]]
     for i,item in enumerate(items):
         text=(f'<font color="{accent}"><b>{i+1:02d}</b></font>  ' if numbered else '')+esc(item)
-        rows.append([para(text,10,markup=True)])
-    t=pad(Table(rows,colWidths=[width],repeatRows=1),7)
+        rows.append([para(text,size,markup=True)])
+    t=pad(Table(rows,colWidths=[width],repeatRows=1,splitByRow=1,splitInRow=1),padding)
     t.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,-1),color(bg)),
         ('BOX',(0,0),(-1,-1),.6,color(LINE)),('LINEBEFORE',(0,0),(0,-1),2.5,color(accent)),
         ('BOTTOMPADDING',(0,0),(-1,0),5),('TOPPADDING',(0,1),(-1,-1),3)]))
     return t
 
-def lexical_card(v,index,width=CW):
+def lexical_card(v,index,width=CW,keep=True):
     if isinstance(v,str):return box(f'{index:02d}  Vocabulary',[v],width,BLUE,'#F7F9FE')
-    rows=[[para(f'W{index:02d}  {v["term"]}',14,'CNB',INK)],
-          [para(v['explanation'],10)]]
+    rows=[[para(f'W{index:02d}  {v["term"]}',14,'CNB',INK),''],
+          [para(v['explanation'],10.7),'']]
     synonyms=v['near_synonyms']
+    commands=[('SPAN',(0,0),(-1,0)),('SPAN',(0,1),(-1,1))]
     if synonyms:
-        data=[[para('NEAR SYNONYMS',8.1,'ENB',BLUE),para('差別 / 替換限制',8.4,'CNB',MUTED)]]
+        rows.append([para('NEAR SYNONYMS',8.1,'ENB',BLUE),para('差別 / 替換限制',8.4,'CNB',MUTED)])
         for s in synonyms:
-            data.append([para(s['text'],10.5,'CNB',BLUE),para(s['distinction'],9.7)])
-        syn=pad(Table(data,colWidths=[(width-20)*.34,(width-20)*.66],repeatRows=1),4)
-        syn.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),color(PALE)),
-            ('LINEBELOW',(0,0),(-1,0),.5,color(LINE)),
-            ('LINEBELOW',(0,1),(-1,-1),.35,color(LINE)),
-            ('LEFTPADDING',(0,0),(0,-1),6)]))
-        rows.append([syn])
+            rows.append([para(s['text'],11,'CNB',BLUE),para(s['distinction'],10.5)])
+        commands.extend([('BACKGROUND',(0,2),(-1,2),color(PALE)),
+            ('LINEBELOW',(0,2),(-1,-1),.35,color(LINE)),
+            ('TOPPADDING',(0,2),(-1,-1),4),('BOTTOMPADDING',(0,2),(-1,-1),4)])
     else:
-        rows.append([para('NEAR SYNONYMS  /  '+v.get('no_synonym_reason',''),9.4,'CN',MUTED)])
-    if synonyms and v.get('no_synonym_reason'):rows.append([para(v['no_synonym_reason'],9.4,'CN',MUTED)])
-    card=pad(Table(rows,colWidths=[width],repeatRows=1),7)
+        rows.append([para('NEAR SYNONYMS  /  '+v.get('no_synonym_reason',''),10,'CN',MUTED),''])
+        commands.append(('SPAN',(0,2),(-1,2)))
+    if synonyms and v.get('no_synonym_reason'):
+        rows.append([para(v['no_synonym_reason'],10,'CN',MUTED),''])
+        commands.append(('SPAN',(0,len(rows)-1),(-1,len(rows)-1)))
+    # Flattened comparison rows can split across pages. A nested whole-table
+    # row would fail for a long card even when repeatRows had been declared.
+    card=pad(Table(rows,colWidths=[width*.34,width*.66],repeatRows=(0,2) if synonyms else 1,
+        splitByRow=1,splitInRow=1),9)
     card.setStyle(TableStyle([('BOX',(0,0),(-1,-1),.7,color(LINE)),
         ('BACKGROUND',(0,0),(-1,0),color('#E8EEF9')),
         ('LINEBEFORE',(0,0),(0,0),3,color(BLUE)),
-        ('TOPPADDING',(0,1),(-1,-1),4),('BOTTOMPADDING',(0,1),(-1,1),4),
-        ('LEFTPADDING',(0,2),(-1,2),7),('RIGHTPADDING',(0,2),(-1,2),7)]))
-    return KeepTogether([card,Spacer(1,7)])
+        ('TOPPADDING',(0,1),(-1,1),7),('BOTTOMPADDING',(0,1),(-1,1),9)]+commands))
+    return KeepTogether([card,Spacer(1,10)]) if keep else card
+
+def balanced_pages(blocks,canvas,capacity):
+    """Partition complete teaching blocks across the fewest legal pages.
+
+    A legal break is between panels/cards, never midway through a paragraph.
+    The cost penalises uneven page heights, particularly a short final page.
+    Oversized blocks keep normal ReportLab splitting instead of losing text.
+    """
+    heights=[]
+    for name,items in blocks:
+        heights.append(sum(item.wrapOn(canvas,CW,capacity)[1] for item in items))
+    if not heights or max(heights)>capacity:
+        return [blocks],heights
+    n=len(blocks);prefix=[0]
+    for h in heights:prefix.append(prefix[-1]+h)
+    # A minimum-page partition can be found greedily for positive heights.
+    pages=1;used=0
+    for h in heights:
+        if used+h>capacity:pages+=1;used=0
+        used+=h
+    target=prefix[-1]/pages
+    dp={(0,0):(0,[])}
+    for page in range(1,pages+1):
+        for end in range(1,n+1):
+            best=None
+            for start in range(end):
+                previous=dp.get((page-1,start))
+                if previous is None:continue
+                height=prefix[end]-prefix[start]
+                if height>capacity:continue
+                cost=previous[0]+(height-target)**2
+                # Keep the Vocabulary title with a first card (a single block),
+                # and favour a clear section boundary when scores are close.
+                if start and blocks[start][0].startswith('vocabulary'):cost-=300
+                if best is None or cost<best[0]:best=(cost,previous[1]+[(start,end)])
+            if best is not None:dp[(page,end)]=best
+    solution=dp.get((pages,n))
+    if solution is None:return [blocks],heights
+    return [blocks[a:b] for a,b in solution[1]],heights
 
 class Marker(Flowable):
     def __init__(self,key,title,level=0,entry=None):
@@ -125,7 +167,8 @@ def render_atlas(book,args,ctx):
     entries=[clean_entry(e,ctx) for e in book['entries']];groups=book['groups'];gloss=book['glossary']
     pdf=out/(base+'.pdf');html_file=out/(base+'.html')
     qa.joinpath('rendered_content.json').write_text(json.dumps(entries,ensure_ascii=False,indent=2),encoding='utf-8')
-    note_pages={};group_pages={};page_count=[0]
+    note_pages={};group_pages={};page_count=[0];balance_report=[]
+    measuring_canvas=ctx['canvas'].Canvas(io.BytesIO())
     def page_end(c,doc):
         page_count[0]=c.getPageNumber();c.saveState()
         e=getattr(c,'_atlas_entry',None)
@@ -188,17 +231,55 @@ def render_atlas(book,args,ctx):
         for e in (e for e in entries if g['range'][0]<=e['id']<=g['range'][1]):
             add(Marker(f's{e["id"]}',f'{e["id"]:03d} {e["keyword"]}',1,e))
             head=Table([[para(f'{e["id"]:03d}',24,'ENB',BLUE),para(e['keyword'],18,'CNB',INK),para(f'原文 p.{e["page"]}',8.5,'CN',MUTED)]],colWidths=[55,CW-121,66])
-            pad(head,0);add(head,Spacer(1,12),para(ctx['highlighted'](e),14.5,'EN',INK,markup=True),Spacer(1,10),
-                box('TRANSLATION',[e['translation']],accent=BLUE,bg='#F2F5FA'),Spacer(1,10),diagram(e,ctx),Spacer(1,11))
-            lw=(CW-12)*.58;rw=(CW-12)*.42
-            left=[box('SENTENCE STRUCTURE',e['structure'],lw,BLUE,'#F4F7FD',True),Spacer(1,7),
-                  box('MEMORY KEY',[e['memory_tip']],lw,TEAL,'#EDF7F3')]
-            right=[box('EXAM FOCUS',e['exam_points'],rw,AMBER,'#FFF7E6',True),Spacer(1,7),
-                   box('PITFALLS',e['pitfalls'],rw,RED,'#FFF0F1')]
-            grid=Table([[left,'',right]],colWidths=[lw,12,rw]);pad(grid,0)
-            add(grid,Spacer(1,13),para('VOCABULARY  /  本句詞義與近義辨析',12,'CNB',INK),Spacer(1,8))
-            for vi,v in enumerate(e['vocabulary'],1):add(lexical_card(v,vi))
-            if e['source_note']:add(box('SOURCE NOTE  /  原文說明',[e['source_note']],accent=MUTED,bg='#F4F5F7'),Spacer(1,8))
+            pad(head,0)
+            blocks=[('read',[
+                head,Spacer(1,16),para(ctx['highlighted'](e),15.5,'EN',INK,markup=True),Spacer(1,14),
+                box('TRANSLATION',[e['translation']],accent=BLUE,bg='#F2F5FA',size=11,padding=9),
+                Spacer(1,14),diagram(e,ctx),Spacer(1,16)]),
+                ('structure',[box('SENTENCE STRUCTURE',e['structure'],accent=BLUE,bg='#F4F7FD',
+                    numbered=True,size=11,padding=9),Spacer(1,13)])]
+            half=(CW-14)/2
+            # Wide syntax paragraphs prevent the cramped narrow-column reading
+            # of v2; the shorter exam/pitfall pair remains visually distinct.
+            exam=box('EXAM FOCUS',e['exam_points'],half,AMBER,'#FFF7E6',True,size=10.7,padding=9)
+            pitfalls=box('PITFALLS',e['pitfalls'],half,RED,'#FFF0F1',size=10.7,padding=9)
+            grid=Table([[exam,'',pitfalls]],colWidths=[half,14,half]);pad(grid,0)
+            if grid.wrapOn(measuring_canvas,CW,H-84)[1]>H-84:
+                # One nested side-by-side row cannot split across an entire
+                # page. Long panels become full-width, splittable tables.
+                blocks.extend([
+                    ('exam',[box('EXAM FOCUS',e['exam_points'],accent=AMBER,bg='#FFF7E6',
+                        numbered=True,size=10.7,padding=9),Spacer(1,13)]),
+                    ('pitfalls',[box('PITFALLS',e['pitfalls'],accent=RED,bg='#FFF0F1',
+                        size=10.7,padding=9),Spacer(1,13)])])
+            else:blocks.append(('exam',[grid,Spacer(1,13)]))
+            blocks.append(('memory',[box('MEMORY KEY',[e['memory_tip']],accent=TEAL,bg='#EDF7F3',
+                size=10.7,padding=9),Spacer(1,14)]))
+            for vi,v in enumerate(e['vocabulary'],1):
+                items=[]
+                if vi==1:items=[para('VOCABULARY  /  本句詞義與近義辨析',12,'CNB',INK),Spacer(1,10)]
+                items.extend([lexical_card(v,vi,keep=False),Spacer(1,6)])
+                blocks.append((f'vocabulary-{vi}',items))
+            if e['source_note']:
+                blocks.append(('source-note',[box('SOURCE NOTE  /  原文說明',[e['source_note']],
+                    accent=MUTED,bg='#F4F5F7',size=10.7,padding=9),Spacer(1,10)]))
+            # Leave a small tolerance for table splitting arithmetic and avoid
+            # pushing a fully planned final line onto an accidental extra page.
+            pages,heights=balanced_pages(blocks,measuring_canvas,H-81-3)
+            measured=dict(zip((b[0] for b in blocks),heights))
+            balance_report.append({'id':e['id'],
+                'planned_pages':len(pages) if max(heights)<=H-84 else None,
+                'natural_split':max(heights)>H-84,
+                'block_heights':{name:round(h,1) for name,h in measured.items()},
+                'pages':[{'blocks':[name for name,_ in page],
+                    'height':round(sum(measured[name] for name,_ in page),1)} for page in pages]})
+            for pi,page in enumerate(pages):
+                if pi:add(PageBreak())
+                for name,items in page:
+                    # All blocks fit normally; oversized content is allowed to
+                    # split naturally rather than receiving an impossible keep.
+                    if measured[name]<=H-84:add(KeepTogether(items))
+                    else:add(*items)
             add(PageBreak())
     add(Marker('glossary','Grammar Glossary'),para('Grammar Glossary',25,'ENB',INK),Spacer(1,8),
         para('集中中英對照 · 例句編號可回查正文',11,'CN',MUTED),Spacer(1,14))
@@ -217,13 +298,15 @@ def render_atlas(book,args,ctx):
     for title,body in review:add(box(title,[body],accent=BLUE),Spacer(1,11))
     doc.build(story,canvasmaker=AtlasCanvas)
     layout={'pages':page_count[0],'sentences':len(entries),'glossary_terms':len(gloss),
-        'note_pages':note_pages,'group_pages':group_pages,'layout':[],'design_version':2}
+        'note_pages':note_pages,'group_pages':group_pages,'layout':balance_report,'design_version':3}
     qa.joinpath('layout_report.json').write_text(json.dumps(layout,ensure_ascii=False,indent=2),encoding='utf-8')
     make_html(book,entries,groups,review,ctx,html_file)
-    qa.joinpath('artifacts.json').write_text(json.dumps({'pdf':str(pdf),'html':str(html_file),'input':str(args.input.resolve()),'design_version':2},ensure_ascii=False,indent=2),encoding='utf-8')
-    print(json.dumps({'pdf':str(pdf),'html':str(html_file),'pages':page_count[0],'sentences':len(entries),'terms':len(gloss),'design_version':2},ensure_ascii=False))
+    qa.joinpath('artifacts.json').write_text(json.dumps({'pdf':str(pdf),'html':str(html_file),'input':str(args.input.resolve()),'design_version':3},ensure_ascii=False,indent=2),encoding='utf-8')
+    print(json.dumps({'pdf':str(pdf),'html':str(html_file),'pages':page_count[0],'sentences':len(entries),'terms':len(gloss),'design_version':3},ensure_ascii=False))
 
 CSS='''*{box-sizing:border-box}html{scroll-behavior:auto}body{margin:0;background:#eef2f8;color:#18263d;font:15px/1.7 "Microsoft YaHei","PingFang SC",Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}.toolbar{position:sticky;top:0;z-index:20;background:#17263d;color:white;padding:12px 24px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.toolbar input{width:min(380px,36vw);border:0;border-radius:7px;padding:8px 12px}.toolbar button,.toolbar a{background:transparent;color:white;border:1px solid #8191af;border-radius:6px;padding:6px 10px;text-decoration:none;font-size:13px}.layout{max-width:1420px;margin:auto;display:grid;grid-template-columns:225px minmax(0,1fr);gap:24px;padding:26px}nav{position:sticky;top:100px;max-height:calc(100vh - 130px);overflow:auto}nav a{display:block;padding:8px 10px;color:#334155;text-decoration:none;font-size:13px;border-radius:6px}nav a:hover{background:#dde7fc}.cover,.map,.note,.glossary,.review{background:white;border:1px solid #dce4ef;border-radius:14px;padding:30px;margin-bottom:26px;scroll-margin-top:110px}.eyebrow{font-size:11px;letter-spacing:.12em;font-weight:700;color:#244bc1}h1{font-size:37px;line-height:1.3;margin:16px 0}h2{font-size:25px;line-height:1.4}h3{margin:0 0 10px;font-size:12px;letter-spacing:.05em}.muted{color:#64748b}.stats{display:flex;flex-wrap:wrap;gap:32px;margin:20px 0}.stats b{font-size:29px;color:#244bc1}.notehead{display:flex;gap:18px;align-items:center;border-bottom:1px solid #dce4ef;padding-bottom:15px}.notehead h2{margin:0}.num{font-size:36px;line-height:1;font-weight:bold;color:#244bc1}.source{font-size:12px;color:#64748b;margin-left:auto}.original{font:22px/1.65 Arial,sans-serif;margin:22px 0 16px}.translation{background:#f1f5fb;border-left:4px solid #244bc1;padding:14px 18px;border-radius:0 8px 8px 0;font-size:17px}.translation:before{content:"TRANSLATION";display:block;font-size:10px;color:#64748b;font-weight:bold;letter-spacing:.1em;margin-bottom:5px}.diagram{display:flex;gap:17px;margin:24px 0;align-items:stretch}.node{flex:1;min-width:0;position:relative;background:#f7f9fd;border:1px solid #dce4ef;border-top:3px solid var(--c);border-radius:7px;padding:11px}.node small{display:block;color:var(--c);font-weight:bold;font-size:11px;line-height:1.45;margin-bottom:9px}.node p{font:14px/1.55 Arial,sans-serif;margin:0;overflow-wrap:anywhere}.node:not(:last-child):after{content:"→";position:absolute;right:-17px;top:45%;color:#64748b}.decode-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin:20px 0}.panel{border:1px solid #dce4ef;border-left:4px solid var(--accent);background:var(--bg);border-radius:0 9px 9px 0;padding:15px 17px;margin-bottom:12px}.panel h3{color:var(--accent)}.panel p{font-size:14px;line-height:1.8;margin:8px 0}.panel ol{margin:0;padding-left:22px;font-size:14px}.panel li{padding:4px 0}.vocab-heading{font-size:15px;margin:26px 0 12px}.lex-card{border:1px solid #dce4ef;border-radius:10px;overflow:hidden;margin-bottom:15px;background:white}.lex-head{display:flex;gap:14px;align-items:baseline;padding:12px 17px;background:#e8eef9;border-left:4px solid #244bc1}.lex-head span{font-size:12px;color:#64748b}.lex-head h4{font-size:21px;line-height:1.4;margin:0}.lex-meaning{font-size:15px;padding:13px 20px;margin:0}.synonyms{margin:0 16px 16px;border:1px solid #e0e7f2;border-radius:6px;overflow:hidden}.syn-head,.syn-row{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(0,1.7fr);gap:16px;padding:10px 13px}.syn-head{background:#eef3ff;font-size:10px;font-weight:bold;color:#64748b;letter-spacing:.04em}.syn-row+.syn-row{border-top:1px solid #e1e7f0}.syn-row strong{color:#244bc1;font-size:16px;line-height:1.5}.syn-row p{margin:0;font-size:14px;line-height:1.8}.no-synonym{padding:0 20px 16px;font-size:13px;color:#64748b}.scene{display:block;max-width:560px;width:100%;margin:20px auto}.mapnodes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}.mapnodes div{padding:15px;background:#eef3ff;border-radius:8px}.mapnodes strong,.mapnodes span{display:block}.mapnodes small{color:#64748b}.map table,.glossary table{border-collapse:collapse;width:100%;font-size:14px;margin:20px 0}.map td,.glossary td,.glossary th{border-bottom:1px solid #dce4ef;text-align:left;vertical-align:top;padding:12px}.glossary th{background:#17263d;color:white}.glossary tr:nth-child(even){background:#f3f6fc}.glossary a{color:#244bc1}.showone{display:none;color:#244bc1;background:transparent;border:0;margin:7px 0}.selftest .showone{display:inline-block}.selftest .translation{filter:blur(6px);cursor:pointer;user-select:none}.selftest .translation.revealed{filter:none;user-select:text}.empty{display:none;padding:22px;background:white}.note[hidden],.map[hidden]{display:none}.toplink{display:block;text-align:right;color:#64748b;font-size:12px}.legend{display:flex;gap:8px;flex-wrap:wrap}.legend span{padding:4px 9px;border:1px solid currentColor;border-radius:6px;font-size:12px}#result{font-size:12px;color:#cbd5e1}@media(max-width:1000px){.layout{grid-template-columns:1fr;padding:14px}nav{display:none}.cover,.map,.note,.glossary,.review{padding:22px}.decode-grid{grid-template-columns:1fr}.toolbar input{width:100%;order:3}.notehead{flex-wrap:wrap}.source{width:100%;margin-left:0}.notehead h2{font-size:24px}.glossary{overflow:auto}.note,.map,.glossary{scroll-margin-top:165px}}@media(max-width:600px){.diagram{flex-direction:column;gap:22px}.node p{font-size:16px;overflow-wrap:normal;word-break:normal}.node small{font-size:12px}.node:not(:last-child):after{content:"↓";right:auto;left:50%;top:auto;bottom:-24px}.syn-head{display:none}.syn-row{display:block}.syn-row p{margin-top:7px}.lex-head h4{font-size:20px}.lex-meaning{font-size:15px}.mapnodes{grid-template-columns:1fr}.original{font-size:21px}.cover,.map,.note,.glossary,.review{padding:18px}}@media print{.toolbar,nav,.showone,.toplink{display:none}.layout{display:block;padding:0}.cover,.map,.note,.glossary,.review{border:0;box-shadow:none;break-before:page;margin:0}.selftest .translation{filter:none}.note[hidden],.map[hidden]{display:block}.lex-card,.panel,.diagram{break-inside:avoid}.decode-grid{grid-template-columns:1.2fr 1fr}}'''
+
+CSS+='''.decode-grid{display:block}.exam-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:1000px){.exam-grid{grid-template-columns:1fr}}@media print{.exam-grid{grid-template-columns:1fr 1fr}}'''
 
 def make_html(book,entries,groups,review,ctx,path):
     E=esc;meta=book['meta'];parts=[f'<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{E(meta["title"])}</title><style>{CSS}</style><body id="top"><div class="toolbar"><strong>English Atlas</strong><input id="search" type="search" placeholder="搜尋題號、詞彙或考點" aria-label="搜尋筆記"><button id="test" aria-pressed="false">開啟譯文自測</button><button id="reset">重置</button><a href="#glossary">Grammar Glossary</a><span id="result">{len(entries)} 句</span></div><div class="layout"><nav><a href="#top">閱讀指南</a>']
@@ -243,7 +326,7 @@ def make_html(book,entries,groups,review,ctx,path):
         for e in (e for e in entries if g['range'][0]<=e['id']<=g['range'][1]):
             parts.append(f'<article class="note" id="s{e["id"]}" data-id="{e["id"]}"><div class="notehead"><span class="num">{e["id"]:03d}</span><h2>{E(e["keyword"])}</h2><span class="source">原文 p.{e["page"]}</span></div><div class="original" lang="en">{ctx["highlighted"](e)}</div><button class="showone">顯示或隱藏本句譯文</button><div class="translation">{E(e["translation"])}</div><div class="diagram">')
             for n in e['diagram']:parts.append(f'<div class="node" style="--c:{ctx["color_for"](n["role"])}"><small>{E(n["role"])}</small><p lang="en">{E(n["text"])}</p></div>')
-            parts.append('</div><div class="decode-grid"><div>'+panel('SENTENCE STRUCTURE',e['structure'],BLUE,'#F4F7FD',True)+panel('MEMORY KEY',[e['memory_tip']],TEAL,'#EDF7F3')+'</div><div>'+panel('EXAM FOCUS',e['exam_points'],AMBER,'#FFF7E6',True)+panel('PITFALLS',e['pitfalls'],RED,'#FFF0F1')+'</div></div><h3 class="vocab-heading">VOCABULARY / 本句詞義與近義辨析</h3>')
+            parts.append('</div><div class="decode-grid">'+panel('SENTENCE STRUCTURE',e['structure'],BLUE,'#F4F7FD',True)+'<div class="exam-grid">'+panel('EXAM FOCUS',e['exam_points'],AMBER,'#FFF7E6',True)+panel('PITFALLS',e['pitfalls'],RED,'#FFF0F1')+'</div>'+panel('MEMORY KEY',[e['memory_tip']],TEAL,'#EDF7F3')+'</div><h3 class="vocab-heading">VOCABULARY / 本句詞義與近義辨析</h3>')
             for vi,v in enumerate(e['vocabulary'],1):
                 if isinstance(v,str):parts.append(panel('Vocabulary',[v],BLUE,PALE));continue
                 parts.append(f'<section class="lex-card"><div class="lex-head"><span>W{vi:02d}</span><h4 lang="en">{E(v["term"])}</h4></div><p class="lex-meaning">{E(v["explanation"])}</p>')

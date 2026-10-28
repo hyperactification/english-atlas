@@ -22,6 +22,7 @@ import shutil
 import subprocess
 import sys
 import unicodedata
+from runtime_support import find_native_tool
 
 
 NUMBERED = re.compile(r"^\s*([0-9０-９]{1,6})[.．、)）]\s*(.*)$")
@@ -46,28 +47,8 @@ def compact(text: str) -> str:
 
 
 def locate_pdftotext() -> str | None:
-    """PATH first, then the relocatable Codex bundled-runtime layout."""
-    configured = os.environ.get("PDFTOTEXT")
-    if configured:
-        candidate = Path(configured).expanduser()
-        if candidate.is_file():
-            return str(candidate)
-    on_path = shutil.which("pdftotext")
-    if on_path:
-        return on_path
-    executable = Path(sys.executable).resolve()
-    suffix = ".exe" if os.name == "nt" else ""
-    # python/python.exe and native/poppler share a dependencies directory.
-    for ancestor in list(executable.parents)[:3]:
-        for tail in (
-            Path("native/poppler/Library/bin") / ("pdftotext" + suffix),
-            Path("native/poppler/bin") / ("pdftotext" + suffix),
-            Path("bin") / ("pdftotext" + suffix),
-        ):
-            candidate = ancestor / tail
-            if candidate.is_file():
-                return str(candidate)
-    return None
+    """Use PDFTOTEXT, PATH, or an adjacent native-tool installation."""
+    return find_native_tool("pdftotext")
 
 
 def split_pages(text: str) -> list[str]:

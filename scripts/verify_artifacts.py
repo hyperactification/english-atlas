@@ -5,6 +5,21 @@ from pypdf import PdfReader
 from PIL import Image,ImageDraw
 
 def normalize(s):return re.sub(r'\s+','',str(s)).replace('’',"'")
+def printed_fragments(item):
+    if not isinstance(item,dict):return [item]
+    result=[item['term'],item['explanation']]
+    for synonym in item.get('near_synonyms',[]):result.extend([synonym['text'],synonym['distinction']])
+    if item.get('no_synonym_reason'):result.append(item['no_synonym_reason'])
+    return result
+def body_text(page):
+    # Repeated page headers/footers are not part of a paragraph that continues
+    # on the next page. Keep the body and memory tip in PDF drawing order.
+    parts=[];height=float(page.mediabox.height)
+    def visit(value,cm,tm,font,size):
+        y=tm[4]*cm[1]+tm[5]*cm[3]+cm[5]
+        if 42<y<height-42:parts.append(value)
+    page.extract_text(visitor_text=visit)
+    return normalize(''.join(parts))
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--qa-dir',required=True,type=Path)
@@ -14,7 +29,7 @@ def main():
     layout=json.loads((q/'layout_report.json').read_text(encoding='utf-8'))
     entries=json.loads((q/'rendered_content.json').read_text(encoding='utf-8'))
     pdf=Path(artifacts['pdf']);html=Path(artifacts['html'])
-    reader=PdfReader(pdf);texts=[normalize(p.extract_text() or '') for p in reader.pages]
+    reader=PdfReader(pdf);texts=[body_text(p) for p in reader.pages]
     fail=[];checks=0
     for j,e in enumerate(entries):
         start=layout['note_pages'][str(e['id'])]-1
@@ -22,10 +37,11 @@ def main():
         content=''.join(texts[start:end])
         for key in ['english','translation','memory_tip','source_note','structure','vocabulary','exam_points','pitfalls']:
             values=e.get(key,'');values=values if isinstance(values,list) else [values]
-            for i,s in enumerate(values):
-                if not s:continue
-                checks+=1
-                if normalize(s) not in content:fail.append({'id':e['id'],'field':key,'item':i})
+            for i,item in enumerate(values):
+                for fi,s in enumerate(printed_fragments(item)):
+                    if not s:continue
+                    checks+=1
+                    if normalize(s) not in content:fail.append({'id':e['id'],'field':key,'item':i,'fragment':fi})
     markup=html.read_text(encoding='utf-8')
     html_count=len(re.findall(r'<article class="note"',markup))
     if html_count!=len(entries):fail.append({'html_count':html_count,'expected':len(entries)})

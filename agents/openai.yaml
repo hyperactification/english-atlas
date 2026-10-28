@@ -1,6 +1,6 @@
 interface:
-  display_name: "英语彩色学霸笔记"
-  short_description: "英语句子全译详解，彩色箭头与趣味图解，输出PDF和离线互动笔记"
-  default_prompt: "使用 $english-study-notes 将附件全部句子做成同款彩色学霸笔记，附详细考点、English语法术语及中英对照表，输出PDF和离线互动版。"
+  display_name: "English Atlas｜英語精讀圖譜"
+  short_description: "完整译解英语句子，以独立词卡、近义对照和考点面板生成PDF及离线互动笔记"
+  default_prompt: "使用 $english-study-notes 将附件全部句子制作成 English Atlas，保留完整译解、English Grammar 与集中中英对照，以分区面板和独立词卡突出语境义、近义辨析及替换限制，输出 PDF 和离线互动版。"
 policy:
   allow_implicit_invocation: true

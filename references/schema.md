@@ -19,7 +19,7 @@
 | keyword | string | 简短标题，如 `precede`；不得放整段词汇解释 |
 | translation | string | 忠实、自然、完整的中文译文 |
 | structure | string[] | 常规2至3条，结构拆解和逻辑关系 |
-| vocabulary | string[] | 常规3至4条，义项、English词性与搭配 |
+| vocabulary | object[]（兼容旧string[]） | 常规3至4条；本句义项、English词性、搭配，以及逐项近义Words or Phrases与辨析 |
 | exam_points | string[] | 常规2条，具体语法或翻译考法 |
 | pitfalls | string[] | 常规1至2条，易错点与原因 |
 | source_note | string | 必要时说明原文瑕疵并另给建议；否则空字符串 |
@@ -27,6 +27,25 @@
 | memory_tip | string | 一个准确、简明、便于记忆的提示 |
 
 写作长度由难度决定。300至500中文字是本次参考风格的常见密度，不是硬性配额。图格可用省略号压缩，但应保持来源可辨，不任意改变关系。新增需要标注的非逐字逻辑转换要明确说明。
+
+### Vocabulary / Lexical Resources
+
+新任务每项使用以下结构；旧 `string` 仍可读取，不会自动编造近义词。
+
+```json
+{
+  "term": "provoke opposition",
+  "explanation": "verb phrase，激起反对；provoke强调引发反应，在本句并非‘挑衅’。",
+  "near_synonyms": [
+    {"text": "arouse opposition", "distinction": "同样表示激起反对；arouse常与情绪、反应搭配。"},
+    {"text": "trigger opposition", "distinction": "强调触发反对的起点；与provoke的侧重点不同。"}
+  ]
+}
+```
+
+`term`、`explanation`、`near_synonyms` 均必填，每个近义项包含非空的 `text` 和 `distinction`。通常选1至3个贴合本句的表达；数量不是硬配额。完整原词义及搭配仍放 `explanation`，近义表达不能替代原词讲解。
+
+若确无合适表达，用 `"near_synonyms":[]` 并添加非空 `"no_synonym_reason"`。排版显示 Near synonyms 与原因。不得用反义词、宽泛同主题词或无解释的 `N/A` 填充；不能暗示所有近义项可直接替换。词性或结构变化在 `distinction` 写明，必要时给完整替换短语。
 
 ## groups
 

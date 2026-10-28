@@ -73,6 +73,37 @@ class Validator:
         for index, item in enumerate(value):
             self.string(item, f"{path}[{index}]")
 
+    def vocabulary(self, value: object, path: str) -> None:
+        """Accept legacy strings and explicit, reviewable lexical resources."""
+        if not isinstance(value, list) or not value:
+            self.error(path, "Expected a non-empty array of strings or vocabulary objects.")
+            return
+        for index, item in enumerate(value):
+            item_path = f"{path}[{index}]"
+            if isinstance(item, str):
+                self.string(item, item_path)
+                continue
+            if not isinstance(item, dict):
+                self.error(item_path, "Expected a string or vocabulary object.")
+                continue
+            for field in ("term", "explanation"):
+                self.string(item.get(field), item_path + "." + field)
+            synonyms = item.get("near_synonyms")
+            if not isinstance(synonyms, list):
+                self.error(item_path + ".near_synonyms", "Expected an array; use [] with no_synonym_reason when no useful near synonym fits.")
+            else:
+                for j, synonym in enumerate(synonyms):
+                    synonym_path = f"{item_path}.near_synonyms[{j}]"
+                    if not isinstance(synonym, dict):
+                        self.error(synonym_path, "Expected an object with text and distinction.")
+                        continue
+                    for field in ("text", "distinction"):
+                        self.string(synonym.get(field), synonym_path + "." + field)
+                if not synonyms:
+                    self.string(item.get("no_synonym_reason"), item_path + ".no_synonym_reason")
+            if "no_synonym_reason" in item and synonyms != []:
+                self.string(item["no_synonym_reason"], item_path + ".no_synonym_reason")
+
     def triples(self, value: object, path: str, count: int | None = None) -> None:
         if not isinstance(value, list) or not value:
             self.error(path, "Expected a non-empty array of three-string rows.")
@@ -125,8 +156,9 @@ class Validator:
             for field in ("english", "translation", "keyword", "memory_tip"):
                 self.string(entry.get(field), path + "." + field)
             self.string(entry.get("source_note"), path + ".source_note", allow_empty=True)
-            for field in ("structure", "vocabulary", "exam_points", "pitfalls"):
+            for field in ("structure", "exam_points", "pitfalls"):
                 self.strings(entry.get(field), path + "." + field)
+            self.vocabulary(entry.get("vocabulary"), path + ".vocabulary")
             diagram = entry.get("diagram")
             if not isinstance(diagram, list) or not diagram:
                 self.error(path + ".diagram", "Expected a non-empty array of role/text objects.")

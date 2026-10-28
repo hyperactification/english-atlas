@@ -1,196 +1,519 @@
 {
   "meta": {
-    "title": "英语学霸笔记示例",
-    "chapter": "示例章节",
-    "source_name": "三句格式演示",
-    "source_pages": 1
+    "title": "English Atlas Chapter5（1）近義聯想樣張",
+    "chapter": "Chapter 5（1） · 3題樣張",
+    "source_name": "考研核心词Chapter5（1）句子练习(1).pdf",
+    "source_pages": 6,
+    "source_author": "Jocelyn老师"
   },
   "entries": [
     {
       "id": 1,
-      "translation": "把青年学者的学术探索限制在僵化的传统框架内，是不合理的。",
+      "page": 1,
+      "raw": "As authorities discuss plans to reform social rules, substantial reforms have provoked\nconsiderable opposition from interest groups.（provoke：v. 激起，引起，挑衅）",
+      "english": "As authorities discuss plans to reform social rules, substantial reforms have provoked considerable opposition from interest groups.",
+      "keyword": "substantial · provoke",
+      "translation": "在当局讨论社会规则改革计划之际，重大改革已引起利益集团的强烈反对。",
       "structure": [
-        "sentence core 是 It is irrational，属于 It＋be＋ adjective ＋to do 结构。It 是 formal subject ， real subject 是后面的 infinitive phrase  to limit…；可还原为 To limit…is irrational。",
-        "infinitive 内部的核心是 limit academic exploration，young scholars’ 是 possessive  modifier ；within rigid traditional frameworks 说明探索被限制的范围。",
-        "rigid 和 traditional 共同修饰 frameworks；否定评价针对整个‘限制学术探索’的行为，而不是针对青年学者本人。"
+        "As 引出 time clause，交代讨论改革计划的背景；这里宜理解为“在……之际”，不能只见 as 就断定是因果。main clause 的 sentence core 是 reforms have provoked opposition。",
+        "have provoked 是 present perfect，突出已经产生并与当前有关的反应。to reform social rules 是 infinitive phrase，后接 plans，说明计划的内容；from interest groups 说明反对来自谁。"
       ],
       "vocabulary": [
-        "irrational， adjective ，不合理的、不理性的；由 negative prefix  ir- 与 rational 构成，本句强调做法缺乏合理性。",
-        "limit， transitive verb ，限制；limit A to B 常表示把 A 限制在 B 范围内，本句用 within 突出框架内部的边界。",
-        "academic exploration，学术探索；academic 修饰与学术研究相关的活动，不能按 academy 机械译成‘学院的’。",
-        "rigid， adjective ，僵化的、死板的；framework， noun ，框架，此处均为抽象义，并非物体坚硬的结构。"
+        {
+          "term": "substantial",
+          "explanation": "adjective，本句可理解为“重大的、幅度显著的”，修饰 reforms；在改革语境也可能译为“实质性的”，需结合上下文判断。",
+          "near_synonyms": [
+            {
+              "text": "major",
+              "distinction": "同样可修饰 reforms，突出改革的重要性或规模；不必包含 substantial 的分量或幅度意味。"
+            },
+            {
+              "text": "significant",
+              "distinction": "侧重有重要意义或影响；并不保证改革的数量或幅度很大。"
+            }
+          ]
+        },
+        {
+          "term": "provoke opposition",
+          "explanation": "verb phrase，激起反对；provoke 在本句指引发不利反应，不宜译成“挑衅反对”。",
+          "near_synonyms": [
+            {
+              "text": "arouse opposition",
+              "distinction": "常见搭配，同样表示激起反对；arouse 常与情绪、反应搭配。"
+            },
+            {
+              "text": "trigger opposition",
+              "distinction": "强调触发反对的起点；没有必要把原句改译为突然发生。"
+            }
+          ]
+        },
+        {
+          "term": "considerable",
+          "explanation": "adjective，程度或数量相当大的；considerable opposition 表示反对程度较大。",
+          "near_synonyms": [
+            {
+              "text": "a great deal of",
+              "distinction": "可改述为 a great deal of opposition；用这个完整短语替换 considerable，不能直接把它当作 adjective 修饰任意词类。"
+            },
+            {
+              "text": "substantial",
+              "distinction": "也可与 opposition 搭配，强调反对的分量；同一句连续重复 substantial 会显得累赘。"
+            }
+          ]
+        },
+        {
+          "term": "interest groups",
+          "explanation": "plural noun phrase，因共同利益而组织起来并影响决策的团体；interest 此处为“利益”，不是“兴趣”。",
+          "near_synonyms": [
+            {
+              "text": "groups representing shared interests",
+              "distinction": "解释性改述，便于记忆；保留共同利益这一核心，不能随意换成范围更广的 stakeholders。"
+            }
+          ]
+        }
       ],
       "exam_points": [
-        "翻译 formal subject 结构时，通常先译 infinitive 内容，再补‘是……的’，不必把 It 译成‘它’。",
-        "抓住 limit 的动作对象及 within 引出的范围，形成‘把……限制在……内’的完整中文表达。"
+        "翻译时分清讨论计划与已出现的反对：present perfect 的“已”应保留；时间背景本身不等于“因为讨论才引发反对”。",
+        "同义改写须同时检查义项与结构：considerable opposition 可近义改述为 a great deal of opposition；两者的 part of speech 与内部结构不同。"
       ],
       "pitfalls": [
-        "不要把 scholars 译成‘奖学金’，也不要把 irrational 理解成数学中的‘无理数’；语境决定其评价义。"
+        "substantial 与 considerable 在此都含程度较大的意思，但分别修饰改革和反对，不能把整个句子理解成“支持改革”。interest groups 也不等于研究兴趣小组。"
       ],
       "source_note": "",
       "diagram": [
         {
-          "role": "Formal subject",
-          "text": "It"
+          "role": "Time clause",
+          "text": "As authorities discuss plans to reform social rules"
         },
         {
-          "role": "Evaluation",
-          "text": "is irrational"
+          "role": "Subject",
+          "text": "substantial reforms"
         },
         {
-          "role": "Real subject",
-          "text": "to limit young scholars’ academic exploration"
+          "role": "Predicate",
+          "text": "have provoked"
         },
         {
-          "role": "Scope",
-          "text": "within rigid traditional frameworks"
+          "role": "Object + source",
+          "text": "considerable opposition from interest groups"
         }
       ],
-      "memory_tip": "It 像先占座的标签，真正被评价的内容在后面的 to do。",
-      "page": 1,
-      "raw": "It is irrational to limit young scholars’ academic exploration within rigid traditional frameworks.",
-      "english": "It is irrational to limit young scholars’ academic exploration within rigid traditional frameworks.",
-      "keyword": "irrational"
+      "memory_tip": "provoke → 引发反应；arouse / trigger 是近义入口，搭配 opposition 才能锁定本句义项。"
     },
     {
       "id": 2,
-      "translation": "只有齐心协力，我们才能按期完成这项艰巨的研究项目。",
+      "page": 1,
+      "raw": "While governments cut pollution and upgrade production methods, the transition toward\nlow-carbon development imposes immense pressure on manufacturers.（transition：n. 转型；\nmanufacturer：n. 制造商）",
+      "english": "While governments cut pollution and upgrade production methods, the transition toward low-carbon development imposes immense pressure on manufacturers.",
+      "keyword": "transition · immense",
+      "translation": "在各国政府减少污染、升级生产方式的同时，向低碳发展的转型给制造商带来了巨大压力。",
       "structure": [
-        "正常语序为 We can finish this arduous research project on schedule only with concerted efforts；原句将 only 修饰的 prepositional phrase 移到句首，触发 main clause  partial inversion 。",
-        "inversion 形式是 can we finish：只把 modal verb  can 放到 subject  we 前， main verb  finish 留在 subject 后，不是把整个 predicate 全部前移。",
-        "with concerted efforts 表示实现目标所需的方式或条件，on schedule 表示按计划的时间；arduous 修饰 research project。"
+        "While 引出 time clause，包含 cut pollution 与 upgrade production methods 两个 coordinated predicates，Subject 都是 governments。本句先按“在……的同时”理解，while 也可能带对照意味。",
+        "main clause 的 sentence core 是 the transition imposes pressure。toward low-carbon development 是 prepositional phrase，限定转型方向；on manufacturers 指压力的承受方。"
       ],
       "vocabulary": [
-        "concerted， adjective ，共同努力的、协调一致的；concerted efforts 通常译为共同努力、齐心协力，强调配合。",
-        "arduous， adjective ，艰巨的、艰苦的；强调任务需要持续付出努力，不仅是情绪上令人不悦。",
-        "on schedule，按期、按计划；ahead of schedule 是提前，behind schedule 是落后于进度。",
-        "finish， transitive verb ，完成；后面接 noun 或 doing，表达‘完成做某事’一般不用 finish to do。"
+        {
+          "term": "transition toward",
+          "explanation": "noun phrase 中的搭配，向……的转型；transition 强调从一种状态转到另一种状态的过程。",
+          "near_synonyms": [
+            {
+              "text": "shift toward",
+              "distinction": "同样表示转向；shift 更突出方向或重心变化，未必强调完整的转型过程。"
+            },
+            {
+              "text": "move toward",
+              "distinction": "常见的解释性改述，更宽泛；用于本句时仍须保留向低碳发展的方向。"
+            }
+          ]
+        },
+        {
+          "term": "impose pressure on",
+          "explanation": "verb phrase，给……施加压力；on 后接承受压力的人或组织。",
+          "near_synonyms": [
+            {
+              "text": "place pressure on",
+              "distinction": "含义接近，仍接承受方；不必带 impose 可能具有的强加意味。"
+            },
+            {
+              "text": "put pressure on",
+              "distinction": "较常见、直白的表达；不能因此把客观的转型压力擅自变成某人蓄意施压。"
+            }
+          ]
+        },
+        {
+          "term": "immense",
+          "explanation": "adjective，极大的；本句修饰 pressure，强调压力程度。",
+          "near_synonyms": [
+            {
+              "text": "enormous",
+              "distinction": "在 enormous pressure 中可表达相近的强度；不设置未经依据的固定强弱排名。"
+            },
+            {
+              "text": "huge",
+              "distinction": "huge pressure 可表达相近含义，语体较日常；正式写作也常见 enormous pressure。"
+            }
+          ]
+        },
+        {
+          "term": "manufacturers",
+          "explanation": "plural noun，制造商、生产制造企业；不是其产品或工厂建筑本身。",
+          "near_synonyms": [
+            {
+              "text": "manufacturing firms",
+              "distinction": "本句指企业时可作近义改述；manufacturer 在其他语境也可指个人，不能一律等同于公司。"
+            }
+          ]
+        }
       ],
       "exam_points": [
-        "Only＋ adverbial 置于句首时， main clause 用 partial inversion ；Only＋ subject 置于句首通常不 inversion ，不能机械套用。",
-        "译文用‘只有……才……’保留必要条件关系；不要改成‘只要努力就一定完成’这种充分条件表达。"
+        "识别 main clause 的 singular head word transition：前面 governments 虽为 plural，也不决定后面的 imposes；不能被近处名词或长修饰成分误导。",
+        "搭配替换要保留关系：impose / place / put pressure on manufacturers。只替换核心表达，不漏掉 on 或改变压力承受方。"
       ],
       "pitfalls": [
-        "can we finish 虽与 interrogative sentence 词序相似，本句仍是 declarative sentence ；不能译成‘我们能完成吗’。"
+        "while 并不总是“然而”；本句具备同时进行的背景。immense 说的是压力巨大，不能增译成所有制造商都必然倒闭。"
       ],
       "source_note": "",
       "diagram": [
         {
-          "role": "Fronted adverbial",
-          "text": "Only with concerted efforts"
+          "role": "Time clause",
+          "text": "While governments cut pollution and upgrade production methods"
         },
         {
-          "role": "Partial inversion",
-          "text": "can we finish"
+          "role": "Subject",
+          "text": "the transition toward low-carbon development"
         },
         {
-          "role": "Object",
-          "text": "this arduous research project"
+          "role": "Predicate + object",
+          "text": "imposes immense pressure"
         },
         {
-          "role": "Time",
-          "text": "on schedule"
+          "role": "Prepositional phrase",
+          "text": "on manufacturers"
         }
       ],
-      "memory_tip": "Only＋ adverbial 站到句首，can 跑到 subject 前； main verb  finish 留在后面。",
-      "page": 1,
-      "raw": "Only with concerted（adj. 共同筹划的，一致的；尽力的）efforts can we finish this arduous（adj. 艰辛的，困难的）research project on schedule.",
-      "english": "Only with concerted efforts can we finish this arduous research project on schedule.",
-      "keyword": "concerted"
+      "memory_tip": "转型 toward 一个方向；压力 on 一个承受方。先记两条搭配，再联想 shift 与 place pressure。"
     },
     {
       "id": 3,
-      "translation": "社会动荡发生之前，往往先出现贫富差距扩大和生活压力上升的情况。",
+      "page": 1,
+      "raw": "Although researchers recognize its commercial value, a gigantic volume of latent data remains\nuntapped beneath public digital platforms.（latent：adj. 潜在的；untapped：adj. 未开发的）",
+      "english": "Although researchers recognize its commercial value, a gigantic volume of latent data remains untapped beneath public digital platforms.",
+      "keyword": "latent · untapped",
+      "translation": "尽管研究人员认识到这些数据的商业价值，公共数字平台之下仍潜藏着海量尚未开发利用的数据。",
       "structure": [
-        "sentence core 为 Social unrest is often preceded by…，is preceded 是 passive voice 。precede 表示“先于……”，因此 by 后面的现象发生在社会动荡之前。",
-        "widening wealth gaps 与 rising living pressure 由 and 并列，构成 preposition  by 的 object ；widening 和 rising 都是 premodifier ，表示扩大中、上升中。"
+        "Although 引出 concessive clause，表达“已经认识到价值”与“仍未开发”的落差。recognize 的 Object 是 its commercial value；its 的所指需结合后面的数据资源理解。",
+        "main clause 的 Subject 是 a gigantic volume of latent data，head word 为 volume，因此用 remains。remains 是 linking verb，untapped 作 subject complement，表示数据仍处于未开发的状态；不是 remains 被误当成 passive auxiliary。"
       ],
       "vocabulary": [
-        "precede： transitive verb ，先于；A precedes B 表示 A 在 B 前，B is preceded by A 的时间顺序仍是 A 在前。",
-        "social unrest：社会动荡、社会不安；unrest 通常为 uncountable noun ，不宜理解成普通个人心情烦躁。",
-        "wealth gap：财富差距、贫富差距；widening 表示差距扩大，rising pressure 表示压力增加。"
+        {
+          "term": "a gigantic volume of",
+          "explanation": "noun phrase，海量的、数量极其庞大的；volume 在此是数量，不是音量或书卷。",
+          "near_synonyms": [
+            {
+              "text": "a huge amount of",
+              "distinction": "本句把 data 当作整体资源时可作近义改述；保留 amount 这一 singular head word。"
+            },
+            {
+              "text": "an enormous quantity of",
+              "distinction": "同样强调数量很大；quantity 表数量，后接 data，不能只将 gigantic 机械替换成整个短语。"
+            }
+          ]
+        },
+        {
+          "term": "latent",
+          "explanation": "adjective，潜藏的、尚未显现的；latent data 在这里强调尚未充分显露或利用的数据资源。",
+          "near_synonyms": [
+            {
+              "text": "hidden",
+              "distinction": "强调未显露或不容易看到；不必具有 latent 的潜伏或尚未发挥作用的意味。"
+            },
+            {
+              "text": "not yet apparent",
+              "distinction": "解释性改述“尚未显现的”；表达位置往往要调整，不能原样塞入每个 latent 的位置。"
+            }
+          ]
+        },
+        {
+          "term": "untapped",
+          "explanation": "participial adjective，尚未开发利用的；常与 resources、potential 等搭配。",
+          "near_synonyms": [
+            {
+              "text": "unused",
+              "distinction": "更宽泛地表示未使用；不一定强调资源的价值尚待开发。"
+            },
+            {
+              "text": "not yet exploited",
+              "distinction": "本句 exploited 指开发利用，是解释性改述；不能套用“剥削”的义项。"
+            }
+          ]
+        },
+        {
+          "term": "commercial value",
+          "explanation": "noun phrase，商业价值；讨论的是用于商业活动的价值，不是数据的全部社会或学术价值。",
+          "near_synonyms": [
+            {
+              "text": "value for business use",
+              "distinction": "解释性改述，限定在商业用途；与范围更广的 economic value 有差别。"
+            }
+          ]
+        }
       ],
       "exam_points": [
-        "passive sentence 翻译须还原先后：先是差距扩大、压力增加，之后才是社会动荡，不能按中文直觉将顺序翻转。",
-        "often 只说明常见先后关系；本句没有明确证明这些现象必然导致动荡，不能补成唯一原因或必然结果。"
+        "a volume of data 的 Subject head 为 volume。of 后面的 data 不直接决定 finite verb 的形式；remains 的 -s 与这个 singular head 对应。",
+        "区分 latent 与 untapped：前者重在潜藏、未显现，后者重在尚未利用；二者相关，但不是可相互替换的同义词。"
       ],
       "pitfalls": [
-        "不要译为“社会动荡往往先于贫富差距扩大”，那正好与 is preceded by 的含义相反。"
+        "although 不必再与 but 并用。平台“之下”是原文的空间隐喻，不增译成平台故意隐瞒数据。gigantic 的近义项也不能抹掉 untapped 的“尚未”含义。"
       ],
       "source_note": "",
       "diagram": [
         {
+          "role": "Concessive clause",
+          "text": "Although researchers recognize its commercial value"
+        },
+        {
           "role": "Subject",
-          "text": "Social unrest"
+          "text": "a gigantic volume of latent data"
         },
         {
-          "role": "Passive predicate",
-          "text": "is often preceded by"
+          "role": "Linking verb + complement",
+          "text": "remains untapped"
         },
         {
-          "role": "Object of by",
-          "text": "widening wealth gaps and rising living pressure"
+          "role": "Prepositional phrase",
+          "text": "beneath public digital platforms"
         }
       ],
-      "memory_tip": "先贫富差距扩大和压力增加，再有社会动荡； passive sentence 的文字顺序不等于事件顺序。",
-      "page": 1,
-      "raw": "Social unrest （n. 动荡，动乱） is often preceded by widening wealth gaps and rising living pressure.",
-      "english": "Social unrest is often preceded by widening wealth gaps and rising living pressure.",
-      "keyword": "precede"
+      "memory_tip": "latent ≈ 潜藏；untapped ≈ 未利用。相关概念用对照记，Near synonyms 只沿各自的义项展开。"
     }
   ],
   "groups": [
     {
-      "title": "结构与逻辑",
+      "title": "意义相近，也要保留边界",
       "range": [
         1,
         3
       ],
-      "subtitle": "先识别结构  再还原含义",
-      "icon": "reading",
+      "subtitle": "前3题样张｜每条Vocabulary均新增语境近义Words or Phrases及辨析。",
+      "illustration": {
+        "primitives": [
+          {
+            "type": "rect",
+            "args": [
+              15,
+              28,
+              120,
+              104,
+              "#FFFFFF",
+              "#2457BD",
+              10
+            ]
+          },
+          {
+            "type": "text",
+            "args": [
+              75,
+              44,
+              "CONTEXT",
+              "#2457BD",
+              10
+            ]
+          },
+          {
+            "type": "rect",
+            "args": [
+              180,
+              28,
+              120,
+              104,
+              "#FFFFFF",
+              "#B84132",
+              10
+            ]
+          },
+          {
+            "type": "text",
+            "args": [
+              240,
+              44,
+              "NEAR SYNONYMS",
+              "#B84132",
+              10
+            ]
+          },
+          {
+            "type": "rect",
+            "args": [
+              345,
+              28,
+              120,
+              104,
+              "#FFFFFF",
+              "#167361",
+              10
+            ]
+          },
+          {
+            "type": "text",
+            "args": [
+              405,
+              44,
+              "USAGE",
+              "#167361",
+              10
+            ]
+          },
+          {
+            "type": "text",
+            "args": [
+              75,
+              80,
+              "原句义项",
+              "#17263C",
+              12
+            ]
+          },
+          {
+            "type": "text",
+            "args": [
+              240,
+              80,
+              "相近表达",
+              "#17263C",
+              12
+            ]
+          },
+          {
+            "type": "text",
+            "args": [
+              405,
+              80,
+              "替换边界",
+              "#17263C",
+              12
+            ]
+          },
+          {
+            "type": "line",
+            "args": [
+              143,
+              80,
+              168,
+              80,
+              "#167361",
+              2
+            ]
+          },
+          {
+            "type": "line",
+            "args": [
+              168,
+              80,
+              162,
+              75,
+              "#167361",
+              2
+            ]
+          },
+          {
+            "type": "line",
+            "args": [
+              168,
+              80,
+              162,
+              85,
+              "#167361",
+              2
+            ]
+          },
+          {
+            "type": "line",
+            "args": [
+              308,
+              80,
+              333,
+              80,
+              "#167361",
+              2
+            ]
+          },
+          {
+            "type": "line",
+            "args": [
+              333,
+              80,
+              327,
+              75,
+              "#167361",
+              2
+            ]
+          },
+          {
+            "type": "line",
+            "args": [
+              333,
+              80,
+              327,
+              85,
+              "#167361",
+              2
+            ]
+          },
+          {
+            "type": "text",
+            "args": [
+              240,
+              153,
+              "Meaning first · Compare carefully",
+              "#64748B",
+              12
+            ]
+          }
+        ]
+      },
       "nodes": [
         [
-          "抓核心",
-          "Subject / Predicate",
-          "谁做什么"
+          "程度",
+          "substantial / immense",
+          "同谈程度，仍要看修饰对象"
         ],
         [
-          "看关系",
-          "Condition / Time",
-          "条件与先后"
+          "反应",
+          "provoke / arouse",
+          "搭配opposition，锁定义项"
         ],
         [
-          "再翻译",
-          "Meaning",
-          "保持原意"
+          "状态",
+          "latent / untapped",
+          "潜藏与未利用，不能互换"
         ]
       ],
       "rows": [
         [
-          "It is...to do",
-          "形式占位与真实内容",
-          "先看完整的 to do"
+          "provoke opposition",
+          "arouse opposition",
+          "近义搭配；trigger更突出触发起点。"
         ],
         [
-          "Only + adverbial",
-          "部分倒装",
-          "辅助词前置，实义动词保留"
+          "immense pressure",
+          "enormous pressure",
+          "都强调巨大压力；不硬设程度等级。"
         ],
         [
-          "be preceded by",
-          "先后次序",
-          "后面的事件实际先发生"
+          "latent / untapped",
+          "潜藏 / 尚未利用",
+          "二者是相关概念，并非一组近义词。"
         ]
       ],
-      "focus": "Only＋adverbial 位于句首，可能触发 partial inversion。",
-      "warning": "箭头说明结构或逻辑，不能把先后顺序直接当作因果。"
+      "focus": "先确定main clause，再核对义项、搭配和近义表达的替换边界。",
+      "warning": "Near synonyms不等于完全相同；Usage note说明本句中哪些意思或结构需要保留。"
     }
   ],
   "glossary": [
     {
       "term": "Subject",
       "translation": "主语",
-      "explanation": "句子讨论的人、物或概念，先找它才能看清是谁做或处于什么状态。",
+      "explanation": "句子所陈述的人或事物；长短语中需继续找到head word。",
       "examples": [
         1,
         2,
@@ -200,27 +523,110 @@
     {
       "term": "Predicate",
       "translation": "谓语",
-      "explanation": "说明主语的动作或状态；本笔记图中常标出核心动词及助动词。",
+      "explanation": "说明Subject的动作或状态，有限形式体现tense等信息。",
+      "examples": [
+        1,
+        2
+      ]
+    },
+    {
+      "term": "Object",
+      "translation": "宾语",
+      "explanation": "在相应结构中接受或涉及动作的成分，如opposition。",
+      "examples": [
+        1,
+        2
+      ]
+    },
+    {
+      "term": "Time clause",
+      "translation": "时间状语从句",
+      "explanation": "交代主事件发生的时间或背景；并不自动证明因果。",
+      "examples": [
+        1,
+        2
+      ]
+    },
+    {
+      "term": "Concessive clause",
+      "translation": "让步状语从句",
+      "explanation": "表示虽有某情况，另一情况仍成立；本例由although引出。",
+      "examples": [
+        3
+      ]
+    },
+    {
+      "term": "Present perfect",
+      "translation": "现在完成时",
+      "explanation": "have/has加past participle，联系此前事件与当前。",
+      "examples": [
+        1
+      ]
+    },
+    {
+      "term": "Infinitive phrase",
+      "translation": "不定式短语",
+      "explanation": "to加base form及其附属成分；本例说明计划内容。",
+      "examples": [
+        1
+      ]
+    },
+    {
+      "term": "Linking verb",
+      "translation": "系动词",
+      "explanation": "连接Subject与补充其状态或性质的成分，如remains。",
+      "examples": [
+        3
+      ]
+    },
+    {
+      "term": "Subject complement",
+      "translation": "主语补足语／表语",
+      "explanation": "跟在linking verb后补充Subject的状态，如untapped。",
+      "examples": [
+        3
+      ]
+    },
+    {
+      "term": "Prepositional phrase",
+      "translation": "介词短语",
+      "explanation": "由preposition及其相关成分构成，表示方向、位置等关系。",
+      "examples": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "term": "Head word",
+      "translation": "中心词",
+      "explanation": "决定短语基本性质的核心词；volume决定remains的形式。",
       "examples": [
         2,
         3
       ]
     },
     {
-      "term": "Formal subject",
-      "translation": "形式主语",
-      "explanation": "先占主语的位置，把较长的真正内容放到后面；常见为 it。",
+      "term": "Participial adjective",
+      "translation": "分词形容词",
+      "explanation": "由participle形成并表达性质或状态的adjective，如untapped。",
       "examples": [
-        1
-      ]
-    },
-    {
-      "term": "Partial inversion",
-      "translation": "部分倒装",
-      "explanation": "把助动词或情态动词等提到主语前，实义动词通常仍在其后。",
-      "examples": [
-        2
+        3
       ]
     }
+  ],
+  "review": [
+    [
+      "01 先选义项",
+      "用原句确定每个词的具体含义，再读Near synonyms；不跨义项串词。"
+    ],
+    [
+      "02 再看搭配",
+      "provoke opposition、impose pressure on等完整短语比孤立单词更便于回忆。"
+    ],
+    [
+      "03 最后检查替换",
+      "遮住Usage note，先说出语气、范围或结构差别，再对照核实。"
+    ]
   ]
 }
